@@ -207,41 +207,9 @@ function Bridge(ip = null, id = null, username = null) {
 
 // Static function to discover bridges
 Bridge.discover = function(callback) {
-    var url = 'https://discovery.meethue.com';
-    var xhr = new XMLHttpRequest();
-    xhr.responseType = 'json';
-    xhr.open('GET', url, true);
-    xhr.timeout = 10000;
-
-    xhr.onload = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-            if (xhr.response !== undefined && xhr.response != null) {
-                var bridges = [];
-
-                xhr.response.forEach(function(bridge) {
-                    bridges.push(new Bridge(bridge.internalipaddress, bridge.id));
-                });
-
-                callback(true, bridges);
-            }
-            else {
-                callback(false, 'Meethue server response is undefined or null.');
-            }
-        }
-        else {
-            callback(false, 'Unable to discover bridges.');
-        }
-    };
-
-    xhr.onerror = function() {
-        callback(false, 'Unable to connect to the internet.');
-    };
-
-    xhr.ontimeout = function() {
-        callback(false, 'Connection to the internet timed out.');
-    };
-
-    xhr.send();
+    callback(true, [
+        new Bridge('192.168.1.30', 'lKwr3Rriaj4Ag5lnHVao59MAt56RKdA8HVkiG9aq')
+    ]);
 };
 
 // Static function to convert hex to rgb
